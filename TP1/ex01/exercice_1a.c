@@ -5,26 +5,27 @@
 
 float *descente(float A[N][N], float B[N], int n)
 {
-  float   *x;
-
-  /* Here we allocate the result verctor \
-  (you're gonna do it yourself in the next exercises)*/
-  x = malloc(sizeof(float) * n);
-
-
-  /******Implement the solution here******/
-  /***************************************/
-  
-  /****************************************/
-
-  return (x);
+  float   *X;
+  X = malloc(sizeof(float) * n);
+  float S;
+  X[0]=B[0]/A[0][0];
+  for(int i=1;i<n;i++)
+  {
+	S=0;
+	for(int j=0;j<i;j++)
+	{
+		S=S+A[i][j] * X[j];
+	}
+	X[i]=(B[i]-S)/A[i][i];
+  }
+ return(X);
 }
 
 
 int main()
 {
   float   A[N][N], B[N];
-  float   *x;
+  float   *X;
   int     n;
 
   printf("Enter the size of the matrix: ");
@@ -50,10 +51,11 @@ int main()
   }
 
   /* The calculation of the result */
-  x = descente(A, B, n);
+  X = descente(A, B, n);
   
   /* Printing the results */
   printf("\nThe resulting vector: [");
   for (int i = 0; i < n; i++)
-    printf("%f%c", x[i], ",]"[i == n - 1]);
+    printf("%f%c", X[i], ",]"[i == n - 1]);
 }
+
