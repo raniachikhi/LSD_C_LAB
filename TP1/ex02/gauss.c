@@ -4,31 +4,49 @@
 
 float *remontee(float A[N][N], float B[N], int n)
 {
-
-  /******Implement the solution here******/
-  /***************************************/
+  float *X;
+  X=malloc(sizeof(float) * n);
+  float S;
+  X[n-1]=B[n-1]/A[n-1][n-1];
+  for(int i=n-2; i>=0; i--)
+  {
+	S=0;
+	for(int j=i+1;j<n; j++)
+	{
+		S=S+A[i][j] * X[j];
+	}
+	X[i]=(B[i]-S)/A[i][i];
+  }
   
-  /***************************************/
-  return x;
+  return X;
 }
 
 float *gauss(float A[N][N] ,float B[N], int n)
 {
-  /******Implement the Gaussian elimination******/
-  /**********************************************/
-  
+  float *X;
+  X=malloc(sizeof(float) * n);
+  float factor;
+  for(int k=0; k<n-1;k++)
+  {
+	for(int i=k+1;i<n;i++)
+	{
+		factor=A[i][k]/A[k][k];
+		for(int j=0; j<n ; j++)
+		{
+			A[i][j]=A[i][j]-factor * A[k][j];
+		}
+		B[i]=B[i]-factor * B[k];
+	}
+  }
 
-  /**********************************************/
-  /*Resolve the system using the back substitution method*/
-  /*You can use your solution of the exercice 1-b*/
-  x = remontee(A, B, n);
-  return(x);
+  X = remontee(A, B, n);
+  return(X);
 }
 
 int main()
 {
   float   A[N][N], B[N];
-  float   *x;
+  float   *X;
   int     n;
 
   printf("Enter the size of the matrix: ");
@@ -54,11 +72,11 @@ int main()
   }
 
   /* The calculation of the result */
-  x = gauss(A, B, n);
+  X = gauss(A, B, n);
 
   /* Printing the results */
   printf("\nThe resulting vector: [");
   for (int i = 0; i < n; i++)
-    printf("%f%c", x[i], ",]"[i == n - 1]);
+    printf("%f%c", X[i], ",]"[i == n - 1]);
 }
 
