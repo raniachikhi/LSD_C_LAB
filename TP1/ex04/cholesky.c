@@ -56,7 +56,7 @@ int main()
 	}
 	//le calcul de CY=B//
 	double M;
-	Y[0]=B[0];
+	Y[0]=B[0]/C[0][0];
 	for(int i=1;i<n;i++)
 	{
 		M=0;
@@ -64,8 +64,16 @@ int main()
 		{
 			M=M+C[i][j]*Y[j];
 	        }           
-		Y[i]=B[i]-M;
- 	}
+	Y[i]=(B[i]-M)/C[i][i];
+        }
+	printf("Y:\n");
+	for(int i=0;i<n;i++)
+         {
+                 printf("%lf\t", Y[i]);
+                 printf("\n");
+         }
+
+
 	//le calcul de transposee de C//
 	double Tr[N][N];
           for(int i=0;i<n;i++)
@@ -83,20 +91,19 @@ int main()
 
 	//Calcul de TrX=Y//
 	double M1;
-	X[n-1]=Y[n-1]/A[n-1][n-1];
+	X[n-1]=Y[n-1]/Tr[n-1][n-1];
 	for(int i=n-2;i>=0;i--)
  	{
 		M1=0;
 		for(int j=i+1;j<n;j++)
 		{
-			M1=M1+A[i][j] * X[j];
+			M1=M1+Tr[i][j] * X[j];
 		}
-	X[i]=(Y[i]-M1)/A[i][i];
+	X[i]=(Y[i]-M1)/Tr[i][i];
 	}
 	printf("\nThe resulting vector: [");
 	  for (int i = 0; i < n; i++)
    		 printf("%lf%c", X[i], ",]"[i == n - 1]);
-         
  return(0);
 }
 
